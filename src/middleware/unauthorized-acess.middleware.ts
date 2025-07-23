@@ -1,11 +1,20 @@
 import type { Context, Next } from "hono";
+import { ValidationError } from "./error.middleware.js";
 
-export const sessionValidator = (c: Context, n: Next) => {
+export const sessionValidator = async (c: Context, n: Next) => {
   const user = c.get("user");
   const path = c.req.path;
   if (path.startsWith("/api/v1/dashboard") && !user) {
-    return c.json({ error: "Unauthorized access" }, 401);
+    throw new ValidationError(
+      "Unauthorized access attempt detected.",
+      {
+        action: "access_protected_resources",
+        requirePermission: "user",
+        receivedPermission: "unauthorized",
+      },
+      401
+    );
   }
 
-  return n();
+  return await n();
 };

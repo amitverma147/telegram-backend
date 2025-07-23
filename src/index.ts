@@ -6,6 +6,7 @@ import { auth } from "./lib/better-auth/auth.js";
 import { addSession } from "./middleware/session.middleware.js";
 import { configCors } from "./middleware/cors.middleware.js";
 import { sessionValidator } from "./middleware/unauthorized-acess.middleware.js";
+import errorHandler from "./middleware/error.middleware.js";
 
 const app = new Hono();
 const port = Number(PORT) || 8080;
@@ -14,6 +15,8 @@ app.use(configCors);
 
 app.use(addSession);
 app.use(sessionValidator);
+
+app.onError(errorHandler);
 
 app.on(["POST", "GET"], "/api/auth/*", (c) => {
   return auth.handler(c.req.raw);
