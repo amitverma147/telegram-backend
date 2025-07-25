@@ -19,3 +19,5 @@ export const PADDLE_PRODUCT_ID = process.env.PADDLE_PRODUCT_ID || "";
 
 export const PADDLE_SUBSCRIPTION_WEBHOOK_SECRET_KEY =
   process.env.PADDLE_SUBSCRIPTION_WEBHOOK_SECRET_KEY || "";
+
+export const token = process.env.TELEGRAM_TOKEN || "";

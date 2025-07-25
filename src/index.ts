@@ -7,6 +7,7 @@ import { addSession } from "./middleware/session.middleware.js";
 import { configCors } from "./middleware/cors.middleware.js";
 import { sessionValidator } from "./middleware/unauthorized-acess.middleware.js";
 import errorHandler from "./middleware/error.middleware.js";
+import { initBot } from "./bot/index.js";
 
 const app = new Hono();
 const port = Number(PORT) || 8080;
@@ -23,6 +24,9 @@ app.on(["POST", "GET"], "/api/auth/*", (c) => {
 });
 
 app.get("/", (c) => c.text("Welcome to the TELEGRAM BOT.", 200));
+
+//BOT
+initBot();
 
 serve(
   {
